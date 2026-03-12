@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>AgentEscrow — ERC-8183 Agentic Commerce Protocol</title>
+    <meta name="description" content="The open, permissionless standard for agent commerce applications with escrow and evaluator attestation programmed into Ethereum smart contracts." />
+    <meta property="og:title" content="AgentEscrow — ERC-8183 Agentic Commerce Protocol" />
+    <meta property="og:description" content="Trustless escrow for AI agent commerce. Client locks funds, provider submits work, evaluator attests completion." />
+    <meta property="og:type" content="website" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+      /* Critical: prevent flash of unstyled content */
+      html { background: #0a0d1a; }
+      body { margin: 0; }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: #0a0d1a; }
+      ::-webkit-scrollbar-thumb { background: rgba(114, 232, 218, 0.3); border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: rgba(114, 232, 218, 0.5); }
+
+      /* Display font */
+      h1, h2, h3, .display-font {
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+      }
+
+      /* Mono font */
+      code, pre, .mono-font {
+        font-family: 'DM Mono', 'JetBrains Mono', monospace;
+      }
+
+      /* Body font */
+      body, p, span, .body-font {
+        font-family: 'DM Sans', system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script
+      defer
+      src="%VITE_ANALYTICS_ENDPOINT%/umami"
+      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+  </body>
+</html>

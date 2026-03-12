@@ -1,0 +1,15 @@
+# CODEOWNERS — AgentEscrow ERC-8183
+# These owners will be requested for review on all PRs
+
+# Default owner for all files
+* @AgentEscrow8183
+
+# Smart contracts — require extra review
+/contracts/ @AgentEscrow8183
+
+# Core server and database
+/server/ @AgentEscrow8183
+/drizzle/ @AgentEscrow8183
+
+# CI/CD workflows
+/.github/workflows/ @AgentEscrow8183
