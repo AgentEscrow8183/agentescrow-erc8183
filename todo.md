@@ -66,3 +66,10 @@
 - [x] Tambah Twitter Card meta tags
 - [x] Tambah favicon, canonical URL, dan meta description
 - [x] Tambah Google Fonts (Orbitron + Share Tech Mono)
+
+## Phase 10: Canonical URL + Whitepaper/Docs
+- [x] Update canonical URL ke https://escrowagent.vip di index.html
+- [x] Update og:url dan twitter:url ke escrowagent.vip
+- [x] Buat halaman Docs/Whitepaper dengan spesifikasi teknis ERC-8183
+- [x] Tambahkan route /docs ke App.tsx
+- [x] Tambahkan link Docs di Navbar
