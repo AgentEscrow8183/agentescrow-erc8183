@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAccount } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Link } from "wouter";
-import { Plus, Filter, RefreshCw, ExternalLink, Clock, Wallet } from "lucide-react";
+import { Plus, Filter, RefreshCw, ExternalLink, Clock, Wallet, Search } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import AIChatWidget from "@/components/AIChatWidget";
 import CreateJobModal from "@/components/CreateJobModal";
@@ -33,8 +33,9 @@ export default function Dashboard() {
   const [roleFilter, setRoleFilter] = useState<RoleFilter>("all");
   const [stateFilter, setStateFilter] = useState<StateFilter>("all");
   const [showCreate, setShowCreate] = useState(false);
+  const [search, setSearch] = useState("");
 
-  const { data: jobs = [], isLoading, refetch } = trpc.jobs.list.useQuery(
+  const { data: rawJobs = [], isLoading, refetch } = trpc.jobs.list.useQuery(
     {
       address: address ?? undefined,
       role: roleFilter !== "all" ? roleFilter : undefined,
@@ -42,6 +43,16 @@ export default function Dashboard() {
     },
     { enabled: true, refetchInterval: 30_000 }
   );
+
+  // Client-side search filter
+  const jobs = search.trim()
+    ? rawJobs.filter((j) =>
+        (j.title ?? "").toLowerCase().includes(search.toLowerCase()) ||
+        j.clientAddress.toLowerCase().includes(search.toLowerCase()) ||
+        j.providerAddress.toLowerCase().includes(search.toLowerCase()) ||
+        j.jobId.toLowerCase().includes(search.toLowerCase())
+      )
+    : rawJobs;
 
   const roleFilters: { value: RoleFilter; label: string }[] = [
     { value: "all", label: "All Jobs" },
@@ -62,7 +73,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="pt-16">
+      <div className="pt-16 page-enter">
         {/* Header */}
         <div className="border-b border-[oklch(0.78_0.22_195/0.1)] bg-[oklch(0.09_0.02_260)]">
           <div className="container py-4 sm:py-6 px-4 sm:px-6">
@@ -123,6 +134,18 @@ export default function Dashboard() {
             </motion.div>
           ) : (
             <>
+              {/* Search bar */}
+              <div className="relative mb-4">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[oklch(0.55_0.04_220)]" />
+                <input
+                  type="text"
+                  placeholder="Search by title, address, or job ID..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2.5 bg-[oklch(0.1_0.02_260)] border border-[oklch(0.2_0.03_260)] rounded-lg text-sm text-[oklch(0.92_0.02_200)] placeholder:text-[oklch(0.45_0.04_220)] focus:outline-none focus:border-[oklch(0.72_0.22_195/0.5)] transition-colors font-mono"
+                />
+              </div>
+
               {/* Filters */}
               <div className="flex flex-col gap-3 mb-5 sm:mb-6">
                 <div className="flex items-center gap-2 flex-wrap">

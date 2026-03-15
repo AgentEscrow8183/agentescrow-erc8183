@@ -233,6 +233,96 @@
 ::-webkit-scrollbar-thumb { background: oklch(0.78 0.22 195 / 0.4); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: oklch(0.78 0.22 195 / 0.7); }
 
+/* ── Global Improvements ───────────────────────────────────────────────── */
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Better text selection */
+::selection {
+  background: oklch(0.72 0.22 195 / 0.3);
+  color: oklch(0.92 0.02 200);
+}
+
+/* Focus visible ring */
+:focus-visible {
+  outline: 2px solid oklch(0.72 0.22 195 / 0.7);
+  outline-offset: 2px;
+}
+
+/* Prevent overflow on mobile */
+body {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Better image rendering */
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Improved input styles */
+input, textarea, select {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Prevent zoom on input focus on iOS */
+@media (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+/* ── Cyber Pulse Animation ──────────────────────────────────────────────── */
+@keyframes cyber-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-cyber-pulse {
+  animation: cyber-pulse 2s ease-in-out infinite;
+}
+
+/* ── Improved Cyber Card ────────────────────────────────────────────────── */
+.cyber-card-hover {
+  background: oklch(0.1 0.02 260);
+  border: 1px solid oklch(0.78 0.22 195 / 0.15);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.cyber-card-hover:hover {
+  border-color: oklch(0.78 0.22 195 / 0.4);
+  box-shadow: 0 4px 24px oklch(0.78 0.22 195 / 0.08);
+}
+
+/* ── Page Transitions ───────────────────────────────────────────────────── */
+.page-enter {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* RainbowKit overrides */
 [data-rk] {
   --rk-colors-accentColor: oklch(0.72 0.22 195) !important;

@@ -30,7 +30,7 @@ function readTime(content: string) {
 }
 
 export default function Blog() {
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [activeCategory, setActiveCategory] = useState<Category | "all">("all");
   const [showCreate, setShowCreate] = useState(false);
 
@@ -38,7 +38,9 @@ export default function Blog() {
     category: activeCategory === "all" ? undefined : activeCategory,
   });
 
-  const isAdmin = user?.role === "admin";
+  // Admin check: wallet-based — any connected wallet can create posts for now
+  // In production, check against an admin wallet address list
+  const isAdmin = isAuthenticated;
 
   return (
     <div className="min-h-screen bg-[oklch(0.06_0.015_260)]">

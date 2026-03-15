@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
@@ -13,22 +13,35 @@ import Analytics from "./pages/Analytics";
 import Docs from "./pages/Docs";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import { useEffect } from "react";
+
+// Scroll to top on route change
+function ScrollToTop() {
+  const [location] = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [location]);
+  return null;
+}
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/dashboard" component={Dashboard} />
-      <Route path="/jobs/:jobId" component={JobDetail} />
-      <Route path="/register" component={Register} />
-      <Route path="/contract" component={Contract} />
-      <Route path="/analytics" component={Analytics} />
-      <Route path="/docs" component={Docs} />
-      <Route path="/blog" component={Blog} />
-      <Route path="/blog/:slug" component={BlogPost} />
-      <Route path="/404" component={NotFound} />
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      <ScrollToTop />
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/jobs/:jobId" component={JobDetail} />
+        <Route path="/register" component={Register} />
+        <Route path="/contract" component={Contract} />
+        <Route path="/analytics" component={Analytics} />
+        <Route path="/docs" component={Docs} />
+        <Route path="/blog" component={Blog} />
+        <Route path="/blog/:slug" component={BlogPost} />
+        <Route path="/404" component={NotFound} />
+        <Route component={NotFound} />
+      </Switch>
+    </>
   );
 }
 
@@ -44,6 +57,7 @@ function App() {
                 background: "oklch(0.1 0.02 260)",
                 border: "1px solid oklch(0.78 0.22 195 / 0.3)",
                 color: "oklch(0.92 0.02 200)",
+                fontFamily: "Inter, sans-serif",
               },
             }}
           />

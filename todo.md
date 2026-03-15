@@ -88,3 +88,13 @@
 - [x] Tambahkan link GitHub Release v1.0.0 di halaman Docs
 - [x] Tambahkan link GitHub Release v1.0.0 di halaman Contract Explorer
 - [x] Seed 3 blog posts: Launch Announcement, Roadmap 2026, Protocol Deep Dive
+
+## Phase 13: Wallet Auth + UI Polish
+- [ ] Hapus semua redirect ke manus.im / Manus OAuth dari frontend
+- [ ] Buat wallet-based auth: connect wallet = identitas user, simpan ke DB
+- [ ] Update Navbar: hilangkan tombol login Manus, ganti dengan ConnectWallet saja
+- [ ] Update Register page: form profil langsung setelah wallet connect (tanpa OAuth)
+- [ ] Update Dashboard: tidak perlu login Manus untuk melihat jobs
+- [ ] Rapihkan spacing, typography, dan konsistensi visual semua halaman
+- [ ] Rapihkan Home landing page (hero, sections, footer)
+- [ ] Rapihkan mobile menu dan Navbar

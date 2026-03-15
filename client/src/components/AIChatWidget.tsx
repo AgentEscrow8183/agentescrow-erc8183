@@ -154,7 +154,7 @@ export default function AIChatWidget() {
                 </button>
               </div>
               <p className="text-[9px] text-[oklch(0.55_0.04_220)] mt-1.5 text-center">
-                Powered by Manus LLM · ERC-8183 Protocol
+                AgentBot AI · ERC-8183 Protocol
               </p>
             </div>
           </motion.div>
