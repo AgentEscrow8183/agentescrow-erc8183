@@ -113,7 +113,7 @@ export default function JobDetail() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <div className="pt-16">
-        <div className="container py-6">
+          <div className="container py-4 sm:py-6 px-4 sm:px-6">
           {/* Back */}
           <Link href="/dashboard">
             <button className="flex items-center gap-2 text-sm text-[oklch(0.55_0.04_220)] hover:text-[oklch(0.78_0.22_195)] transition-colors mb-6">
@@ -190,7 +190,7 @@ export default function JobDetail() {
                           {p.role}
                         </span>
                       </div>
-                      <span className="text-xs font-mono text-[oklch(0.82_0.05_200)]">{p.addr}</span>
+                      <span className="text-xs font-mono text-[oklch(0.82_0.05_200)] truncate max-w-[120px] sm:max-w-full">{shortAddr(p.addr)}</span>
                     </div>
                   ))}
                 </div>

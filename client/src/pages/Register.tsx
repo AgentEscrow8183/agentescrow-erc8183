@@ -85,7 +85,7 @@ export default function Register() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <div className="pt-16">
-        <div className="container py-12 max-w-2xl mx-auto">
+          <div className="container py-6 sm:py-12 max-w-2xl mx-auto px-4 sm:px-6">
           {/* Header */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
             <h1 className="text-3xl font-['Orbitron'] font-black text-[oklch(0.92_0.02_200)] mb-2">
@@ -118,13 +118,13 @@ export default function Register() {
               className="space-y-6"
             >
               {/* Wallet address display */}
-              <div className="cyber-card rounded-xl p-4 flex items-center gap-3">
+              <div className="cyber-card rounded-xl p-3 sm:p-4 flex items-center gap-3 overflow-hidden">
                 <div className="w-10 h-10 rounded-full bg-[oklch(0.72_0.22_195/0.15)] border border-[oklch(0.72_0.22_195/0.3)] flex items-center justify-center">
                   <Wallet className="w-5 h-5 text-[oklch(0.78_0.22_195)]" />
                 </div>
                 <div>
                   <p className="text-xs text-[oklch(0.55_0.04_220)]">Connected Wallet</p>
-                  <p className="text-sm font-mono text-[oklch(0.92_0.02_200)]">{address}</p>
+                  <p className="text-xs sm:text-sm font-mono text-[oklch(0.92_0.02_200)] truncate max-w-[160px] sm:max-w-full">{address}</p>
                 </div>
                 {existingProfile && (
                   <div className="ml-auto flex items-center gap-1 text-xs text-[oklch(0.78_0.22_145)]">

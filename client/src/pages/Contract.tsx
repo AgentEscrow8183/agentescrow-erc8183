@@ -156,7 +156,7 @@ export default function Contract() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <div className="pt-16">
-        <div className="container py-8">
+          <div className="container py-6 sm:py-8 px-4 sm:px-6">
           {/* Header */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
             <div className="flex items-center gap-3 mb-2">
@@ -185,7 +185,7 @@ export default function Contract() {
                   CONTRACT ADDRESS (SEPOLIA)
                 </p>
                 <div className="flex items-center gap-2">
-                  <code className="text-sm font-mono text-[oklch(0.78_0.22_195)]">
+                  <code className="text-xs sm:text-sm font-mono text-[oklch(0.78_0.22_195)] break-all">
                     {ESCROW_CONTRACT_ADDRESS}
                   </code>
                   <CopyButton text={ESCROW_CONTRACT_ADDRESS} />
@@ -216,7 +216,7 @@ export default function Contract() {
           </motion.div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-5 sm:mb-6">
             {[
               { label: "Functions", val: functions.length, color: "oklch(0.72 0.22 195)" },
               { label: "Events", val: events.length, color: "oklch(0.68 0.28 295)" },
