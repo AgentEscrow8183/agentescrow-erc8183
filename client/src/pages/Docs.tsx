@@ -612,7 +612,8 @@ export default function Docs() {
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {[
-                  { label: "GitHub Repository", url: "https://github.com/AgentEscrow8183", desc: "Source code, contracts, and examples" },
+                  { label: "GitHub Repository", url: "https://github.com/AgentEscrow8183/agentescrow-erc8183", desc: "Source code, contracts, and examples" },
+                  { label: "Release v1.0.0", url: "https://github.com/AgentEscrow8183/agentescrow-erc8183/releases/tag/v1.0.0", desc: "Download stable release — changelog and source archive" },
                   { label: "X / Twitter", url: "https://x.com/_agentescrow", desc: "Protocol updates and announcements" },
                   { label: "Ethereum EIPs", url: "https://eips.ethereum.org/", desc: "Ethereum Improvement Proposals registry" },
                   { label: "Sepolia Testnet", url: "https://sepolia.etherscan.io/", desc: "Block explorer for Sepolia testnet" },

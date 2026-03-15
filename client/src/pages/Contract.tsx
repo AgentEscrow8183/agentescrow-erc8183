@@ -205,12 +205,20 @@ export default function Contract() {
                   <ExternalLink className="w-3 h-3" /> Etherscan
                 </a>
                 <a
-                  href="https://github.com/AgentEscrow8183"
+                  href="https://github.com/AgentEscrow8183/agentescrow-erc8183"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1.5 text-xs text-[oklch(0.55_0.04_220)] hover:text-[oklch(0.78_0.22_195)] transition-colors border border-[oklch(0.2_0.03_260)] px-3 py-1.5 rounded hover:border-[oklch(0.78_0.22_195/0.3)]"
                 >
                   <Github className="w-3 h-3" /> GitHub
+                </a>
+                <a
+                  href="https://github.com/AgentEscrow8183/agentescrow-erc8183/releases/tag/v1.0.0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-xs text-[oklch(0.78_0.22_195)] hover:text-[oklch(0.92_0.02_200)] transition-colors border border-[oklch(0.78_0.22_195/0.3)] bg-[oklch(0.78_0.22_195/0.08)] px-3 py-1.5 rounded hover:border-[oklch(0.78_0.22_195/0.6)]"
+                >
+                  <ExternalLink className="w-3 h-3" /> Release v1.0.0
                 </a>
                 <a
                   href="https://x.com/_agentescrow"

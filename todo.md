@@ -82,3 +82,9 @@
 - [x] Buat halaman /blog/:slug untuk detail post
 - [x] Tambah link Blog di Navbar
 - [x] Seed beberapa post awal (Protocol Update, Roadmap, Announcement)
+
+## Phase 12: GitHub Topics + Release Link + Blog Post
+- [x] Tambahkan GitHub Topics (ethereum, erc-8183, escrow, web3, ai-agent, defi, solidity, typescript, react, trpc)
+- [x] Tambahkan link GitHub Release v1.0.0 di halaman Docs
+- [x] Tambahkan link GitHub Release v1.0.0 di halaman Contract Explorer
+- [x] Seed 3 blog posts: Launch Announcement, Roadmap 2026, Protocol Deep Dive
