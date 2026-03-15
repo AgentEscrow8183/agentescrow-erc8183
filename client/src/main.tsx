@@ -1,3 +1,7 @@
+import { RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
+import "@rainbow-me/rainbowkit/styles.css";
+import { WagmiProvider } from "wagmi";
+import { wagmiConfig } from "@/lib/web3";
 import { trpc } from "@/lib/trpc";
 import { UNAUTHED_ERR_MSG } from '@shared/const';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -52,10 +56,22 @@ const trpcClient = trpc.createClient({
   ],
 });
 
+const rainbowTheme = darkTheme({
+  accentColor: "oklch(0.72 0.22 195)",
+  accentColorForeground: "oklch(0.07 0.015 260)",
+  borderRadius: "small",
+  fontStack: "system",
+  overlayBlur: "small",
+});
+
 createRoot(document.getElementById("root")!).render(
-  <trpc.Provider client={trpcClient} queryClient={queryClient}>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
-  </trpc.Provider>
+  <WagmiProvider config={wagmiConfig}>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider theme={rainbowTheme} locale="en-US">
+          <App />
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </trpc.Provider>
+  </WagmiProvider>
 );

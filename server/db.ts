@@ -1,11 +1,21 @@
-import { eq } from "drizzle-orm";
+import { and, desc, eq, or } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
-import { ENV } from './_core/env';
+import {
+  InsertJob,
+  InsertJobNotification,
+  InsertUser,
+  InsertWalletProfile,
+  chatMessages,
+  jobNotifications,
+  jobStateHistory,
+  jobs,
+  users,
+  walletProfiles,
+} from "../drizzle/schema";
+import { ENV } from "./_core/env";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
-// Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
@@ -18,75 +28,211 @@ export async function getDb() {
   return _db;
 }
 
+// ── Users ──────────────────────────────────────────────────────────────────
+
 export async function upsertUser(user: InsertUser): Promise<void> {
-  if (!user.openId) {
-    throw new Error("User openId is required for upsert");
-  }
-
+  if (!user.openId) throw new Error("User openId is required for upsert");
   const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot upsert user: database not available");
-    return;
+  if (!db) return;
+
+  const values: InsertUser = { openId: user.openId };
+  const updateSet: Record<string, unknown> = {};
+
+  const textFields = ["name", "email", "loginMethod"] as const;
+  textFields.forEach((field) => {
+    const value = user[field];
+    if (value === undefined) return;
+    const normalized = value ?? null;
+    values[field] = normalized;
+    updateSet[field] = normalized;
+  });
+
+  if (user.lastSignedIn !== undefined) {
+    values.lastSignedIn = user.lastSignedIn;
+    updateSet.lastSignedIn = user.lastSignedIn;
+  }
+  if (user.role !== undefined) {
+    values.role = user.role;
+    updateSet.role = user.role;
+  } else if (user.openId === ENV.ownerOpenId) {
+    values.role = "admin";
+    updateSet.role = "admin";
   }
 
-  try {
-    const values: InsertUser = {
-      openId: user.openId,
-    };
-    const updateSet: Record<string, unknown> = {};
+  if (!values.lastSignedIn) values.lastSignedIn = new Date();
+  if (Object.keys(updateSet).length === 0) updateSet.lastSignedIn = new Date();
 
-    const textFields = ["name", "email", "loginMethod"] as const;
-    type TextField = (typeof textFields)[number];
-
-    const assignNullable = (field: TextField) => {
-      const value = user[field];
-      if (value === undefined) return;
-      const normalized = value ?? null;
-      values[field] = normalized;
-      updateSet[field] = normalized;
-    };
-
-    textFields.forEach(assignNullable);
-
-    if (user.lastSignedIn !== undefined) {
-      values.lastSignedIn = user.lastSignedIn;
-      updateSet.lastSignedIn = user.lastSignedIn;
-    }
-    if (user.role !== undefined) {
-      values.role = user.role;
-      updateSet.role = user.role;
-    } else if (user.openId === ENV.ownerOpenId) {
-      values.role = 'admin';
-      updateSet.role = 'admin';
-    }
-
-    if (!values.lastSignedIn) {
-      values.lastSignedIn = new Date();
-    }
-
-    if (Object.keys(updateSet).length === 0) {
-      updateSet.lastSignedIn = new Date();
-    }
-
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
-      set: updateSet,
-    });
-  } catch (error) {
-    console.error("[Database] Failed to upsert user:", error);
-    throw error;
-  }
+  await db.insert(users).values(values).onDuplicateKeyUpdate({ set: updateSet });
 }
 
 export async function getUserByOpenId(openId: string) {
   const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get user: database not available");
-    return undefined;
-  }
-
+  if (!db) return undefined;
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
-
-  return result.length > 0 ? result[0] : undefined;
+  return result[0];
 }
 
-// TODO: add feature queries here as your schema grows.
+// ── Wallet Profiles ────────────────────────────────────────────────────────
+
+export async function upsertWalletProfile(profile: InsertWalletProfile) {
+  const db = await getDb();
+  if (!db) return;
+  const updateSet: Record<string, unknown> = {
+    displayName: profile.displayName ?? null,
+    rolePreference: profile.rolePreference ?? "client",
+    bio: profile.bio ?? null,
+  };
+  await db
+    .insert(walletProfiles)
+    .values(profile)
+    .onDuplicateKeyUpdate({ set: updateSet });
+}
+
+export async function getWalletProfileByAddress(address: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db
+    .select()
+    .from(walletProfiles)
+    .where(eq(walletProfiles.walletAddress, address.toLowerCase()))
+    .limit(1);
+  return result[0];
+}
+
+export async function getWalletProfileByUserId(userId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db
+    .select()
+    .from(walletProfiles)
+    .where(eq(walletProfiles.userId, userId))
+    .limit(1);
+  return result[0];
+}
+
+// ── Jobs ───────────────────────────────────────────────────────────────────
+
+export async function createJob(job: InsertJob) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(jobs).values(job);
+  const result = await db.select().from(jobs).where(eq(jobs.jobId, job.jobId)).limit(1);
+  return result[0];
+}
+
+export async function getJobById(jobId: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(jobs).where(eq(jobs.jobId, jobId)).limit(1);
+  return result[0];
+}
+
+export async function listJobsByAddress(address: string) {
+  const db = await getDb();
+  if (!db) return [];
+  const addr = address.toLowerCase();
+  return db
+    .select()
+    .from(jobs)
+    .where(
+      or(
+        eq(jobs.clientAddress, addr),
+        eq(jobs.providerAddress, addr),
+        eq(jobs.evaluatorAddress, addr)
+      )
+    )
+    .orderBy(desc(jobs.createdAt));
+}
+
+export async function listAllJobs(limit = 50) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(jobs).orderBy(desc(jobs.createdAt)).limit(limit);
+}
+
+export async function updateJobState(
+  jobId: string,
+  state: "open" | "funded" | "submitted" | "completed" | "rejected" | "expired" | "cancelled",
+  extras?: { deliverableHash?: string; txHash?: string }
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const updateSet: Record<string, unknown> = { state };
+  if (extras?.deliverableHash) updateSet.deliverableHash = extras.deliverableHash;
+  if (extras?.txHash) updateSet.txHash = extras.txHash;
+  await db.update(jobs).set(updateSet).where(eq(jobs.jobId, jobId));
+}
+
+export async function addJobStateHistory(entry: {
+  jobId: string;
+  fromState?: string;
+  toState: string;
+  actorAddress?: string;
+  txHash?: string;
+}) {
+  const db = await getDb();
+  if (!db) return;
+  await db.insert(jobStateHistory).values(entry);
+}
+
+export async function getJobStateHistory(jobId: string) {
+  const db = await getDb();
+  if (!db) return [];
+  return db
+    .select()
+    .from(jobStateHistory)
+    .where(eq(jobStateHistory.jobId, jobId))
+    .orderBy(desc(jobStateHistory.createdAt));
+}
+
+// ── Notifications ──────────────────────────────────────────────────────────
+
+export async function createNotification(notif: InsertJobNotification) {
+  const db = await getDb();
+  if (!db) return;
+  await db.insert(jobNotifications).values(notif);
+}
+
+export async function getNotificationsForAddress(address: string, limit = 20) {
+  const db = await getDb();
+  if (!db) return [];
+  return db
+    .select()
+    .from(jobNotifications)
+    .where(eq(jobNotifications.recipientAddress, address.toLowerCase()))
+    .orderBy(desc(jobNotifications.createdAt))
+    .limit(limit);
+}
+
+export async function markNotificationsRead(address: string) {
+  const db = await getDb();
+  if (!db) return;
+  await db
+    .update(jobNotifications)
+    .set({ isRead: 1 })
+    .where(
+      and(
+        eq(jobNotifications.recipientAddress, address.toLowerCase()),
+        eq(jobNotifications.isRead, 0)
+      )
+    );
+}
+
+// ── Chat Messages ──────────────────────────────────────────────────────────
+
+export async function saveChatMessage(sessionId: string, role: "user" | "assistant", content: string) {
+  const db = await getDb();
+  if (!db) return;
+  await db.insert(chatMessages).values({ sessionId, role, content });
+}
+
+export async function getChatHistory(sessionId: string, limit = 20) {
+  const db = await getDb();
+  if (!db) return [];
+  return db
+    .select()
+    .from(chatMessages)
+    .where(eq(chatMessages.sessionId, sessionId))
+    .orderBy(desc(chatMessages.createdAt))
+    .limit(limit);
+}
