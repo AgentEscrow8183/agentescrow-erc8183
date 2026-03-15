@@ -11,6 +11,8 @@ import Register from "./pages/Register";
 import Contract from "./pages/Contract";
 import Analytics from "./pages/Analytics";
 import Docs from "./pages/Docs";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 
 function Router() {
   return (
@@ -22,6 +24,8 @@ function Router() {
       <Route path="/contract" component={Contract} />
       <Route path="/analytics" component={Analytics} />
       <Route path="/docs" component={Docs} />
+      <Route path="/blog" component={Blog} />
+      <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

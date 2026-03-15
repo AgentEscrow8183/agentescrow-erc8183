@@ -73,3 +73,12 @@
 - [x] Buat halaman Docs/Whitepaper dengan spesifikasi teknis ERC-8183
 - [x] Tambahkan route /docs ke App.tsx
 - [x] Tambahkan link Docs di Navbar
+
+## Phase 11: Blog + URL Fix
+- [x] Ganti semua agentescrow.vip → escrowagent.vip di seluruh codebase
+- [x] Buat tabel blog_posts di database schema
+- [x] Buat tRPC router untuk blog (list, getBySlug, create admin)
+- [x] Buat halaman /blog dengan daftar post dan filter kategori
+- [x] Buat halaman /blog/:slug untuk detail post
+- [x] Tambah link Blog di Navbar
+- [x] Seed beberapa post awal (Protocol Update, Roadmap, Announcement)

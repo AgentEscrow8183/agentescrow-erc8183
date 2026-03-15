@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `blog_posts` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`slug` varchar(128) NOT NULL,\n\t`title` varchar(256) NOT NULL,\n\t`summary` text NOT NULL,\n\t`content` text NOT NULL,\n\t`category` enum('update','roadmap','announcement','tutorial','research') NOT NULL DEFAULT 'update',\n\t`tags` varchar(512),\n\t`authorName` varchar(128) NOT NULL DEFAULT 'AgentEscrow Team',\n\t`coverImage` text,\n\t`published` int NOT NULL DEFAULT 0,\n\t`publishedAt` timestamp,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `blog_posts_id` PRIMARY KEY(`id`),\n\tCONSTRAINT `blog_posts_slug_unique` UNIQUE(`slug`)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4E8b7BYZ7LC5J7K.ce42b4b51801 --database AiMHYdbcTQcw9MdrNdMT2X --execute CREATE TABLE `blog_posts` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`slug` varchar(128) NOT NULL,\n\t`title` varchar(256) NOT NULL,\n\t`summary` text NOT NULL,\n\t`content` text NOT NULL,\n\t`category` enum('update','roadmap','announcement','tutorial','research') NOT NULL DEFAULT 'update',\n\t`tags` varchar(512),\n\t`authorName` varchar(128) NOT NULL DEFAULT 'AgentEscrow Team',\n\t`coverImage` text,\n\t`published` int NOT NULL DEFAULT 0,\n\t`publishedAt` timestamp,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `blog_posts_id` PRIMARY KEY(`id`),\n\tCONSTRAINT `blog_posts_slug_unique` UNIQUE(`slug`)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1868
+}
