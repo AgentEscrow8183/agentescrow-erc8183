@@ -55,3 +55,8 @@
 - [x] Tambah fitur search/filter di Dashboard
 - [x] Perbaiki footer responsive
 - [x] Perbaiki AIChatWidget dan NotificationBell responsive di mobile
+
+## Phase 8: Social Links
+- [x] Tambah link X (@_agentescrow) dan GitHub (AgentEscrow8183) di Navbar
+- [x] Tambah link X dan GitHub di Footer (Home.tsx)
+- [x] Tambah link X dan GitHub di Contract Explorer page

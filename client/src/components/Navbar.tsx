@@ -2,7 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, BarChart2, LayoutDashboard, Code2, UserCircle, Home } from "lucide-react";
+import { Menu, X, BarChart2, LayoutDashboard, Code2, UserCircle, Home, Github, Twitter } from "lucide-react";
 import NotificationBell from "./NotificationBell";
 
 const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663367353410/AiMHYdbcTQcw9MdrNdMT2X/logo-agentescrow_432019ee.jpeg";
@@ -57,6 +57,28 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+        </div>
+
+        {/* Social links - desktop */}
+        <div className="hidden lg:flex items-center gap-1 mr-1">
+          <a
+            href="https://x.com/_agentescrow"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 text-[oklch(0.55_0.04_220)] hover:text-[oklch(0.78_0.22_195)] transition-colors rounded hover:bg-[oklch(0.78_0.22_195/0.06)]"
+            title="Follow on X"
+          >
+            <Twitter className="w-4 h-4" />
+          </a>
+          <a
+            href="https://github.com/AgentEscrow8183"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 text-[oklch(0.55_0.04_220)] hover:text-[oklch(0.78_0.22_195)] transition-colors rounded hover:bg-[oklch(0.78_0.22_195/0.06)]"
+            title="GitHub"
+          >
+            <Github className="w-4 h-4" />
+          </a>
         </div>
 
         {/* Right side */}
@@ -114,6 +136,29 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              {/* Social links in mobile menu */}
+              <div className="flex items-center gap-2 px-4 pt-3 mt-1 border-t border-[oklch(0.78_0.22_195/0.1)]">
+                <a
+                  href="https://x.com/_agentescrow"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-[oklch(0.65_0.04_220)] hover:text-[oklch(0.78_0.22_195)] hover:bg-[oklch(0.78_0.22_195/0.05)] transition-all"
+                >
+                  <Twitter className="w-4 h-4" />
+                  <span>@_agentescrow</span>
+                </a>
+                <a
+                  href="https://github.com/AgentEscrow8183"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-[oklch(0.65_0.04_220)] hover:text-[oklch(0.78_0.22_195)] hover:bg-[oklch(0.78_0.22_195/0.05)] transition-all"
+                >
+                  <Github className="w-4 h-4" />
+                  <span>GitHub</span>
+                </a>
+              </div>
             </div>
           </motion.div>
         )}
