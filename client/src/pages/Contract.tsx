@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Copy, CheckCheck, ExternalLink, Code2, BookOpen, Zap, Terminal } from "lucide-react";
+import { Copy, CheckCheck, ExternalLink, Code2, BookOpen, Zap, Terminal, Github, Twitter } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import AIChatWidget from "@/components/AIChatWidget";
 import { ESCROW_ABI, ESCROW_CONTRACT_ADDRESS } from "@/lib/web3";
@@ -204,12 +204,20 @@ export default function Contract() {
                   <ExternalLink className="w-3 h-3" /> Etherscan
                 </a>
                 <a
-                  href="https://github.com/AgentEscrow8183/agentescrow-erc8183"
+                  href="https://github.com/AgentEscrow8183"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1.5 text-xs text-[oklch(0.55_0.04_220)] hover:text-[oklch(0.78_0.22_195)] transition-colors border border-[oklch(0.2_0.03_260)] px-3 py-1.5 rounded hover:border-[oklch(0.78_0.22_195/0.3)]"
                 >
-                  <Zap className="w-3 h-3" /> GitHub
+                  <Github className="w-3 h-3" /> GitHub
+                </a>
+                <a
+                  href="https://x.com/_agentescrow"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-xs text-[oklch(0.55_0.04_220)] hover:text-[oklch(0.78_0.22_195)] transition-colors border border-[oklch(0.2_0.03_260)] px-3 py-1.5 rounded hover:border-[oklch(0.78_0.22_195/0.3)]"
+                >
+                  <Twitter className="w-3 h-3" /> @_agentescrow
                 </a>
               </div>
             </div>

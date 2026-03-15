@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Shield, Zap, Bot, Code2, ChevronRight, ExternalLink, Github, BarChart2 } from "lucide-react";
+import { ArrowRight, Shield, Zap, Bot, Code2, ChevronRight, ExternalLink, Github, BarChart2, Twitter } from "lucide-react";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import AIChatWidget from "@/components/AIChatWidget";
@@ -525,8 +525,15 @@ export default function Home() {
           <p className="text-[10px] sm:text-xs text-[oklch(0.55_0.04_220)] font-mono text-center">
             Built for the Ethereum ecosystem · ERC-8183 Draft · 2026
           </p>
-          <div className="flex items-center gap-4 text-xs text-[oklch(0.55_0.04_220)]">
-            <a href="https://github.com/AgentEscrow8183/agentescrow-erc8183" target="_blank" rel="noopener noreferrer" className="hover:text-[oklch(0.78_0.22_195)] transition-colors">GitHub</a>
+          <div className="flex items-center gap-3 text-xs text-[oklch(0.55_0.04_220)]">
+            <a href="https://x.com/_agentescrow" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-[oklch(0.78_0.22_195)] transition-colors">
+              <Twitter className="w-3.5 h-3.5" />
+              <span>@_agentescrow</span>
+            </a>
+            <a href="https://github.com/AgentEscrow8183" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-[oklch(0.78_0.22_195)] transition-colors">
+              <Github className="w-3.5 h-3.5" />
+              <span>GitHub</span>
+            </a>
             <a href="https://eips.ethereum.org/EIPS/eip-8183" target="_blank" rel="noopener noreferrer" className="hover:text-[oklch(0.78_0.22_195)] transition-colors">EIP-8183</a>
           </div>
         </div>
