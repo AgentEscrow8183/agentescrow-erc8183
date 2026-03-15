@@ -10,6 +10,7 @@ import JobDetail from "./pages/JobDetail";
 import Register from "./pages/Register";
 import Contract from "./pages/Contract";
 import Analytics from "./pages/Analytics";
+import Docs from "./pages/Docs";
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/register" component={Register} />
       <Route path="/contract" component={Contract} />
       <Route path="/analytics" component={Analytics} />
+      <Route path="/docs" component={Docs} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

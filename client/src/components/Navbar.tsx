@@ -2,7 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, BarChart2, LayoutDashboard, Code2, UserCircle, Home, Github, Twitter } from "lucide-react";
+import { Menu, X, BarChart2, LayoutDashboard, Code2, UserCircle, Home, Github, Twitter, BookOpen } from "lucide-react";
 import NotificationBell from "./NotificationBell";
 
 const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663367353410/AiMHYdbcTQcw9MdrNdMT2X/logo-agentescrow_432019ee.jpeg";
@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/", label: "Home", icon: Home },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/analytics", label: "Analytics", icon: BarChart2 },
+  { href: "/docs", label: "Docs", icon: BookOpen },
   { href: "/contract", label: "Contract", icon: Code2 },
   { href: "/register", label: "Register", icon: UserCircle },
 ];
