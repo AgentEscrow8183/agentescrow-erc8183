@@ -400,7 +400,7 @@ export default function Home() {
                   </button>
                 </Link>
                 <a
-                  href="https://github.com/AgentEscrow8183/agentescrow-erc8183"
+                  href="https://github.com/AgentEscrow8183"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-sm text-[oklch(0.55_0.04_220)] hover:text-[oklch(0.92_0.02_200)] transition-colors"

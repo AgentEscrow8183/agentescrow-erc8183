@@ -99,3 +99,23 @@ export const chatMessages = mysqlTable("chat_messages", {
 });
 
 export type ChatMessage = typeof chatMessages.$inferSelect;
+
+// Blog posts — protocol updates, roadmap, and community announcements
+export const blogPosts = mysqlTable("blog_posts", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 128 }).notNull().unique(),
+  title: varchar("title", { length: 256 }).notNull(),
+  summary: text("summary").notNull(),
+  content: text("content").notNull(),
+  category: mysqlEnum("category", ["update", "roadmap", "announcement", "tutorial", "research"]).default("update").notNull(),
+  tags: varchar("tags", { length: 512 }), // comma-separated
+  authorName: varchar("authorName", { length: 128 }).default("AgentEscrow Team").notNull(),
+  coverImage: text("coverImage"), // CDN URL
+  published: int("published").default(0).notNull(), // 0=draft, 1=published
+  publishedAt: timestamp("publishedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type BlogPost = typeof blogPosts.$inferSelect;
+export type InsertBlogPost = typeof blogPosts.$inferInsert;

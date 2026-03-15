@@ -15,6 +15,13 @@
       "when": 1773532966219,
       "tag": "0001_yellow_overlord",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1773540318055,
+      "tag": "0002_cooing_gambit",
+      "breakpoints": true
     }
   ]
 }

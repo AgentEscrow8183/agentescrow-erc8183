@@ -8,8 +8,10 @@ import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
 import {
   addJobStateHistory,
+  createBlogPost,
   createJob,
   createNotification,
+  getBlogPostBySlug,
   getChatHistory,
   getJobById,
   getJobStateHistory,
@@ -17,9 +19,11 @@ import {
   getWalletProfileByAddress,
   getWalletProfileByUserId,
   listAllJobs,
+  listBlogPosts,
   listJobsByAddress,
   markNotificationsRead,
   saveChatMessage,
+  updateBlogPost,
   updateJobState,
   upsertWalletProfile,
 } from "./db";
@@ -302,8 +306,73 @@ const chatRouter = router({
     }),
 });
 
-// ── App Router ─────────────────────────────────────────────────────────────
+/// ── Blog Router ─────────────────────────────────────────────────────────────
 
+const blogRouter = router({
+  list: publicProcedure
+    .input(z.object({ category: z.string().optional(), limit: z.number().optional() }))
+    .query(async ({ input }) => {
+      return listBlogPosts({ category: input.category, limit: input.limit, publishedOnly: true });
+    }),
+
+  getBySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ input }) => {
+      return getBlogPostBySlug(input.slug);
+    }),
+
+  create: protectedProcedure
+    .input(z.object({
+      slug: z.string().min(3).max(128),
+      title: z.string().min(3).max(256),
+      summary: z.string().min(10),
+      content: z.string().min(20),
+      category: z.enum(["update", "roadmap", "announcement", "tutorial", "research"]),
+      tags: z.string().optional(),
+      authorName: z.string().optional(),
+      coverImage: z.string().optional(),
+      published: z.boolean().default(false),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      if (ctx.user.role !== "admin") throw new Error("Admin only");
+      const post = await createBlogPost({
+        slug: input.slug,
+        title: input.title,
+        summary: input.summary,
+        content: input.content,
+        category: input.category,
+        tags: input.tags,
+        authorName: input.authorName ?? "AgentEscrow Team",
+        coverImage: input.coverImage,
+        published: input.published ? 1 : 0,
+        publishedAt: input.published ? new Date() : undefined,
+      });
+      return post;
+    }),
+
+  update: protectedProcedure
+    .input(z.object({
+      slug: z.string(),
+      title: z.string().optional(),
+      summary: z.string().optional(),
+      content: z.string().optional(),
+      category: z.enum(["update", "roadmap", "announcement", "tutorial", "research"]).optional(),
+      tags: z.string().optional(),
+      published: z.boolean().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      if (ctx.user.role !== "admin") throw new Error("Admin only");
+      const { slug, published, ...rest } = input;
+      const updates: Record<string, unknown> = { ...rest };
+      if (published !== undefined) {
+        updates.published = published ? 1 : 0;
+        if (published) updates.publishedAt = new Date();
+      }
+      return updateBlogPost(slug, updates as Parameters<typeof updateBlogPost>[1]);
+    }),
+});
+
+// ── App Router ─────────────────────────────────────────────────────────────
 export const appRouter = router({
   system: systemRouter,
   auth: authRouter,
@@ -311,6 +380,7 @@ export const appRouter = router({
   jobs: jobsRouter,
   notifications: notificationsRouter,
   chat: chatRouter,
+  blog: blogRouter,
 });
 
 export type AppRouter = typeof appRouter;
