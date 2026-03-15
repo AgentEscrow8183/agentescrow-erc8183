@@ -105,7 +105,7 @@ export default function CreateJobModal({ open, onClose, onSuccess }: Props) {
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="w-full max-w-lg cyber-card rounded-xl overflow-hidden shadow-2xl">
+            <div className="w-full max-w-lg cyber-card rounded-xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between px-6 py-4 border-b border-[oklch(0.78_0.22_195/0.15)] bg-[oklch(0.09_0.02_260)]">
                 <div>
@@ -123,7 +123,7 @@ export default function CreateJobModal({ open, onClose, onSuccess }: Props) {
               </div>
 
               {/* Form */}
-              <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+              <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
                 {/* Title */}
                 <div>
                   <label className={labelClass}>JOB TITLE</label>

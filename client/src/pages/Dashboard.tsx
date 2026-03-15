@@ -65,7 +65,7 @@ export default function Dashboard() {
       <div className="pt-16">
         {/* Header */}
         <div className="border-b border-[oklch(0.78_0.22_195/0.1)] bg-[oklch(0.09_0.02_260)]">
-          <div className="container py-6">
+          <div className="container py-4 sm:py-6 px-4 sm:px-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <h1 className="text-2xl font-['Orbitron'] font-bold text-[oklch(0.92_0.02_200)]">
@@ -100,7 +100,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="container py-6">
+        <div className="container py-4 sm:py-6 px-4 sm:px-6">
           {!isConnected ? (
             /* Not connected state */
             <motion.div
@@ -124,9 +124,9 @@ export default function Dashboard() {
           ) : (
             <>
               {/* Filters */}
-              <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                <div className="flex items-center gap-2">
-                  <Filter className="w-4 h-4 text-[oklch(0.55_0.04_220)]" />
+              <div className="flex flex-col gap-3 mb-5 sm:mb-6">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Filter className="w-4 h-4 text-[oklch(0.55_0.04_220)] shrink-0" />
                   <div className="flex gap-1 flex-wrap">
                     {roleFilters.map((f) => (
                       <button
@@ -161,7 +161,7 @@ export default function Dashboard() {
               </div>
 
               {/* Stats row */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-5 sm:mb-6">
                 {[
                   { label: "Total Jobs", val: jobs.length },
                   { label: "Active", val: jobs.filter((j) => ["open", "funded", "submitted"].includes(j.state)).length },
@@ -229,9 +229,9 @@ export default function Dashboard() {
                               <h3 className="font-['Orbitron'] font-semibold text-sm text-[oklch(0.92_0.02_200)] truncate">
                                 {job.title ?? `Job #${job.jobId.slice(0, 8)}`}
                               </h3>
-                              <div className="flex items-center gap-4 mt-1 text-[10px] font-mono text-[oklch(0.55_0.04_220)]">
+                              <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-1 text-[10px] font-mono text-[oklch(0.55_0.04_220)]">
                                 <span>Client: {shortAddr(job.clientAddress)}</span>
-                                <span>Provider: {shortAddr(job.providerAddress)}</span>
+                                <span className="hidden sm:inline">Provider: {shortAddr(job.providerAddress)}</span>
                                 <span className="flex items-center gap-1">
                                   <Clock className="w-3 h-3" />
                                   {formatDistanceToNow(new Date(job.createdAt), { addSuffix: true })}

@@ -62,7 +62,7 @@ export default function AIChatWidget() {
         onClick={() => setOpen(true)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className={`fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-[oklch(0.72_0.22_195)] text-[oklch(0.07_0.015_260)] flex items-center justify-center glow-cyan shadow-xl transition-all ${
+        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[oklch(0.72_0.22_195)] text-[oklch(0.07_0.015_260)] flex items-center justify-center glow-cyan shadow-xl transition-all ${
           open ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
@@ -76,7 +76,7 @@ export default function AIChatWidget() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-6 right-6 z-50 w-80 md:w-96 h-[500px] flex flex-col cyber-card rounded-xl shadow-2xl overflow-hidden"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] max-w-sm sm:w-80 md:w-96 h-[420px] sm:h-[500px] flex flex-col cyber-card rounded-xl shadow-2xl overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-[oklch(0.78_0.22_195/0.15)] bg-[oklch(0.09_0.02_260)]">

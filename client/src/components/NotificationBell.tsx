@@ -54,7 +54,7 @@ export default function NotificationBell() {
               initial={{ opacity: 0, y: -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              className="absolute right-0 top-full mt-2 w-80 z-50 cyber-card rounded-lg shadow-xl"
+              className="absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] max-w-xs sm:w-80 z-50 cyber-card rounded-lg shadow-xl"
             >
               <div className="p-3 border-b border-[oklch(0.78_0.22_195/0.15)]">
                 <h3 className="text-xs font-['Orbitron'] font-semibold text-[oklch(0.78_0.22_195)] tracking-wider">
