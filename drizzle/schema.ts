@@ -23,10 +23,10 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// Wallet profiles — stores on-chain identity linked to Manus user
+// Wallet profiles — stores on-chain identity linked to wallet address (no auth required)
 export const walletProfiles = mysqlTable("wallet_profiles", {
   id: int("id").autoincrement().primaryKey(),
-  userId: int("userId").notNull(),
+  userId: int("userId"),
   walletAddress: varchar("walletAddress", { length: 42 }).notNull().unique(),
   displayName: varchar("displayName", { length: 128 }),
   rolePreference: mysqlEnum("rolePreference", ["client", "provider", "evaluator"]).default("client").notNull(),

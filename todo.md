@@ -98,3 +98,7 @@
 - [ ] Rapihkan spacing, typography, dan konsistensi visual semua halaman
 - [ ] Rapihkan Home landing page (hero, sections, footer)
 - [ ] Rapihkan mobile menu dan Navbar
+
+## Phase 14: Bug Fix - Register
+- [ ] Fix wallet.register error "Please login (10001)" - ganti protectedProcedure ke publicProcedure
+- [ ] Fix wallet.getMyProfile agar tidak butuh Manus session

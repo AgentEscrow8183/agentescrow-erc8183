@@ -160,18 +160,18 @@ describe("jobs router", () => {
     expect(result.state).toBe("open");
   });
 
-  it("rejects job creation when not authenticated", async () => {
+  it("allows job creation without authentication (wallet-based auth)", async () => {
     const caller = appRouter.createCaller(createPublicCtx());
-    await expect(
-      caller.jobs.create({
-    providerAddress: "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    const result = await caller.jobs.create({
+      providerAddress: "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
       evaluatorAddress: "0xcccccccccccccccccccccccccccccccccccccccc",
       tokenAddress: "0xdddddddddddddddddddddddddddddddddddddddd",
       amount: "1000000000000000000",
       expiry: Math.floor(Date.now() / 1000) + 86400,
       clientAddress: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      })
-    ).rejects.toThrow();
+    });
+    expect(result).toBeDefined();
+    expect(result?.jobId).toBeDefined();
   });
 
   it("allows valid state transition: open → funded", async () => {
@@ -252,14 +252,13 @@ describe("wallet router", () => {
     expect(result.success).toBe(true);
   });
 
-  it("rejects wallet registration when not authenticated", async () => {
+  it("allows wallet registration without authentication (wallet-based auth)", async () => {
     const caller = appRouter.createCaller(createPublicCtx());
-    await expect(
-      caller.wallet.register({
-        walletAddress: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        displayName: "Test User",
-      })
-    ).rejects.toThrow();
+    const result = await caller.wallet.register({
+      walletAddress: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      displayName: "Test User",
+    });
+    expect(result.success).toBe(true);
   });
 
   it("gets public wallet profile by address", async () => {

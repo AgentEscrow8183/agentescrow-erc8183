@@ -41,9 +41,10 @@ export default function Register() {
   const [rolePreference, setRolePreference] = useState<RolePreference>("client");
   const [saved, setSaved] = useState(false);
 
-  const { data: existingProfile, refetch } = trpc.wallet.getMyProfile.useQuery(undefined, {
-    enabled: isConnected,
-  });
+  const { data: existingProfile, refetch } = trpc.wallet.getMyProfile.useQuery(
+    { walletAddress: address ?? "" },
+    { enabled: isConnected && !!address }
+  );
 
   const register = trpc.wallet.register.useMutation({
     onSuccess: () => {

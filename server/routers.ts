@@ -48,11 +48,13 @@ const walletRouter = router({
       return getWalletProfileByAddress(input.address);
     }),
 
-  getMyProfile: protectedProcedure.query(async ({ ctx }) => {
-    return getWalletProfileByUserId(ctx.user.id);
-  }),
+  getMyProfile: publicProcedure
+    .input(z.object({ walletAddress: z.string().min(10) }))
+    .query(async ({ input }) => {
+      return getWalletProfileByAddress(input.walletAddress.toLowerCase());
+    }),
 
-  register: protectedProcedure
+  register: publicProcedure
     .input(
       z.object({
         walletAddress: z.string().min(10).max(42),
@@ -61,9 +63,8 @@ const walletRouter = router({
         bio: z.string().max(500).optional(),
       })
     )
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       await upsertWalletProfile({
-        userId: ctx.user.id,
         walletAddress: input.walletAddress.toLowerCase(),
         displayName: input.displayName,
         rolePreference: input.rolePreference ?? "client",
@@ -121,7 +122,7 @@ const jobsRouter = router({
       return getJobStateHistory(input.jobId);
     }),
 
-  create: protectedProcedure
+  create: publicProcedure
     .input(
       z.object({
         providerAddress: z.string().min(10).max(42),
@@ -166,7 +167,7 @@ const jobsRouter = router({
       return job;
     }),
 
-  updateState: protectedProcedure
+  updateState: publicProcedure
     .input(
       z.object({
         jobId: z.string(),
